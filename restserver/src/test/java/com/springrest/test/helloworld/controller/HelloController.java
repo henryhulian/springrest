@@ -18,14 +18,14 @@ import com.wordnik.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/hello")
-@Api(value="/hello",description="hello world example")
+@Api(value="/hello",description="测试")
 public class HelloController {
 	
 	@Autowired SessionRepository sessionRepository;
 	
 	@Transactional
     @RequestMapping(value="/",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
-	@ApiOperation(value="query")
+	@ApiOperation(value="查询")
     public List<Session> test() {
     	
     	sessionRepository.save(new Session());
@@ -39,6 +39,13 @@ public class HelloController {
     	}
     	
     	return sessions;
+    }
+	
+    @RequestMapping(value="/",method=RequestMethod.POST,produces=MediaType.APPLICATION_JSON_VALUE)
+	@ApiOperation(value="创建")
+    public Session createSession() {
+    	
+    	return sessionRepository.save(new Session());
     }
 
 }
