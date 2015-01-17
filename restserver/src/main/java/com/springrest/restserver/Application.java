@@ -1,13 +1,14 @@
-package com.springrest.test.helloworld;
+package com.springrest.restserver;
 
-import io.undertow.Undertow.Builder;
-
+import org.neo4j.graphdb.GraphDatabaseService;
+import org.neo4j.graphdb.factory.GraphDatabaseFactory;
+import org.neo4j.graphdb.factory.HighlyAvailableGraphDatabaseFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.ErrorMvcAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter;
-import org.springframework.boot.context.embedded.undertow.UndertowBuilderCustomizer;
 import org.springframework.boot.context.embedded.undertow.UndertowEmbeddedServletContainerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -15,9 +16,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-
 import com.mangofactory.swagger.plugin.EnableSwagger;
-import com.springrest.test.helloworld.interceptor.SecurityInterceptor;
+import com.springrest.restserver.interceptor.SecurityInterceptor;
 
 @Configuration
 @EnableAutoConfiguration(exclude = {ErrorMvcAutoConfiguration.class})
@@ -26,6 +26,21 @@ import com.springrest.test.helloworld.interceptor.SecurityInterceptor;
 @EnableSwagger
 @ComponentScan
 public class Application extends WebMvcAutoConfigurationAdapter {
+	
+	@Value("${io.core}")
+	private Integer ioThread=2;
+	
+	@Value("${io.worker.max}")
+	private Integer ioMaxWorker=10;
+	
+	@Value("${neo4j.ha}")
+	private Boolean useHA=false;
+	
+	@Value("${neo4j.db.path}")
+	private String dbPath="db";
+	
+	@Value("${neo4j.config.path}")
+	private String configPath="config/neo4j.properties";
 	
 	@Autowired
 	SecurityInterceptor securityInterceptor;
@@ -38,27 +53,34 @@ public class Application extends WebMvcAutoConfigurationAdapter {
 		
 	}
 
-    public static void main(String[] args) {
-       SpringApplication.run(Application.class, args);
-    }
     
     @Bean
     public UndertowEmbeddedServletContainerFactory embeddedServletContainerFactory() {
         UndertowEmbeddedServletContainerFactory factory = new UndertowEmbeddedServletContainerFactory();
         
         factory.setContextPath("/rest");
+        factory.setIoThreads(ioThread);
+        factory.setWorkerThreads(ioMaxWorker);
         
-        factory.addBuilderCustomizers(new UndertowBuilderCustomizer() {
-
-            @Override
-            public void customize(Builder builder) {
-            	builder.setIoThreads(2);
-            	builder.setWorkerThreads(10);
-                builder.addHttpListener(8081, "0.0.0.0");
-            }
-
-        });
         return factory;
     }
+    
+    @Bean(destroyMethod = "shutdown")
+    public GraphDatabaseService graphDatabaseService() {
+    	GraphDatabaseService graphDb=null;
+    	if( useHA==true){
+    		graphDb= new HighlyAvailableGraphDatabaseFactory().newHighlyAvailableDatabaseBuilder(dbPath).loadPropertiesFromFile(configPath)
+            		.newGraphDatabase();
+    	}else{
+    		graphDb= new GraphDatabaseFactory().newEmbeddedDatabaseBuilder(dbPath).loadPropertiesFromFile(configPath)
+            		.newGraphDatabase();
+        
+    	}
+        return graphDb;
+    }
+   
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+     }
 
 }
