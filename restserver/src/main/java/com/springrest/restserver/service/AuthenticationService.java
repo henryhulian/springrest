@@ -21,39 +21,43 @@ import com.springrest.restserver.util.TokenUtil;
 @Service
 @Transactional
 public class AuthenticationService {
-	
+
 	@Autowired
 	private ConfigurationBean configurationBean;
-	
+
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	@Autowired
 	private SessionRepository sessionRepository;
 
-	public Integer login( String userName , String password , HttpServletRequest request , HttpServletResponse response){
-		
-		User user = userRepository.findBySchemaPropertyValue("userName", userName);
-		
-		if(!DigestUtil.sha256_base64(password).equals(user.getPassword())){
+	public Integer login(String userName, String password,
+			HttpServletRequest request, HttpServletResponse response) {
+
+		User user = userRepository.findBySchemaPropertyValue("userName",
+				userName);
+
+		if (!DigestUtil.sha256_base64(password).equals(user.getPassword())) {
 			return -1;
 		}
-		
+
 		Session session = new Session();
 		session.setUserName(userName);
 		session.setSessionIp(IpUtil.getIp(request));
-		sessionRepository.save(session);
-		
-		
+		session=sessionRepository.save(session);
+
 		try {
-			CookieUtil.setCookie(response, TokenUtil.TOKEN_COOKIE_NMAE, 
-					AESUtil.encrypt(String.valueOf(session.getId()), configurationBean.getSessionKey()) 
-							, request.getContextPath()
-							, true, -1);
+			session.setSessionSign(AESUtil.encrypt(
+					String.valueOf(session.getId()),
+					configurationBean.getSessionKey()));
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-		
+		sessionRepository.save(session);
+
+		CookieUtil.setCookie(response, TokenUtil.TOKEN_COOKIE_NMAE,
+				session.getSessionSign(), request.getContextPath(), true, -1);
+
 		return 0;
 	}
 }

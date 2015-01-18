@@ -3,8 +3,6 @@ package com.springrest.restserver.domain;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
 import org.springframework.data.neo4j.annotation.GraphId;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
@@ -12,7 +10,6 @@ import org.springframework.data.neo4j.annotation.NodeEntity;
 import com.wordnik.swagger.annotations.ApiModel;
 import com.wordnik.swagger.annotations.ApiModelProperty;
 
-@XmlRootElement
 @NodeEntity
 @ApiModel(value="会员实体")
 public class User implements Serializable{
