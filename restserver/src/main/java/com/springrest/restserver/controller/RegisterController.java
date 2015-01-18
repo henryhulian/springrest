@@ -1,5 +1,7 @@
 package com.springrest.restserver.controller;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +19,8 @@ import com.wordnik.swagger.annotations.ApiParam;
 @RestController("/register")
 @Api(value = "/register", description = "注册模块")
 public class RegisterController {
+	
+	private static Log log = LogFactory.getLog(RegisterController.class);
 
 	@Autowired
 	private UserRepository userRepository;
@@ -37,6 +41,8 @@ public class RegisterController {
 		user.setUserName(userName);
 		user.setPassword(DigestUtil.sha256_base64(password));
 		userRepository.save(user);
+		
+		log.trace("Create:"+user.getUserName());
 
 		return  ResponseEntity.status(200).build();
 	}
