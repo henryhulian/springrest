@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.springrest.restserver.repository.UserRepository;
-import com.springrest.restserver.service.AuthenticationService;
+import com.springrest.restserver.service.Authenticatior;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
@@ -23,7 +24,7 @@ public class AuthenticationController {
 	private UserRepository userRepository;
 	
 	@Autowired
-	private AuthenticationService authenticationService;
+	private Authenticatior authenticatior;
 	
 	@RequestMapping(value="/login",method=RequestMethod.POST)
 	@ApiOperation("登录")
@@ -32,7 +33,7 @@ public class AuthenticationController {
 			HttpServletRequest request,
 			HttpServletResponse response){
 		
-		authenticationService.login(userName, password, request, response);
+		authenticatior.login(userName, password, request, response);
 		
 		return ResponseEntity.status(200).build();
 	}

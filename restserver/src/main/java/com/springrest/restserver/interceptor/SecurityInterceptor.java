@@ -14,7 +14,8 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.springrest.restserver.domain.Session;
-import com.springrest.restserver.service.SessionService;
+import com.springrest.restserver.service.Authorization;
+import com.springrest.restserver.service.impl.SessionServiceImpl;
 import com.springrest.restserver.util.CookieUtil;
 import com.springrest.restserver.util.IpUtil;
 import com.springrest.restserver.util.TokenUtil;
@@ -24,7 +25,10 @@ import com.springrest.restserver.util.TokenUtil;
 public class SecurityInterceptor extends HandlerInterceptorAdapter{
 	
 	@Autowired
-	private SessionService sessionService;
+	private SessionServiceImpl sessionService;
+	
+	@Autowired
+	private Authorization authorization;
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request,
@@ -60,6 +64,11 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter{
 	            //Verify user access
 	            RolesAllowed rolesAnnotation = method.getMethodAnnotation(RolesAllowed.class);
 	            Set<String> rolesSet = new HashSet<String>(Arrays.asList(rolesAnnotation.value()));
+	            
+	            if( !authorization.isUserAllowed(session.getUserName(), rolesSet)){
+	            	 response.sendError(403);
+	                 return false;
+	            }
 	            
 		    }
 		}

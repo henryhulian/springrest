@@ -21,6 +21,8 @@ public class Session  implements Serializable{
 	private Long id;
 	
 	private String userName;
+	
+	private Long userId;
 
 	private String sessionIp="";
 	
@@ -87,6 +89,14 @@ public class Session  implements Serializable{
 		return "Session [id=" + id + ", userName=" + userName + ", sessionIp=" + sessionIp + ", sessionSign="
 				+ sessionSign + ", createTime=" + createTime
 				+ ", lassAccessTime=" + lassAccessTime + "]";
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
 }
