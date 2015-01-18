@@ -45,6 +45,9 @@ public class Application extends WebMvcAutoConfigurationAdapter {
 	@Value("${neo4j.config.path}")
 	private String configPath="config/neo4j.properties";
 	
+	@Value("${session.key}")
+	private String sessionKey="wXf;7-*!i)&d7TCM";
+	
 	@Autowired
 	SecurityInterceptor securityInterceptor;
 	
@@ -56,6 +59,12 @@ public class Application extends WebMvcAutoConfigurationAdapter {
 		
 	}
 
+	@Bean
+	public ConfigurationBean configurationBean(){
+		ConfigurationBean configurationBean = new ConfigurationBean();
+		configurationBean.setSessionKey(sessionKey);
+		return configurationBean;
+	}
     
     @Bean
     public UndertowEmbeddedServletContainerFactory embeddedServletContainerFactory() {

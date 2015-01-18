@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.springframework.data.neo4j.annotation.GraphId;
+import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 
 import com.wordnik.swagger.annotations.ApiModel;
@@ -26,7 +27,8 @@ public class User implements Serializable{
 	private Long id;
 	
 	@ApiModelProperty(value="用户名",position=2)
-	private String username;
+	@Indexed
+	private String userName;
 	
 	@ApiModelProperty(value="密码",position=3)
 	private String password;
@@ -34,13 +36,6 @@ public class User implements Serializable{
 	@ApiModelProperty(value="创建时间",position=4)
 	private Date createTime = new Date(System.currentTimeMillis());
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
 
 	public String getPassword() {
 		return password;
@@ -65,6 +60,13 @@ public class User implements Serializable{
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 	
 }

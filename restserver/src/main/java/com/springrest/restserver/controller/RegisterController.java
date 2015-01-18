@@ -1,6 +1,7 @@
 package com.springrest.restserver.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,17 +23,22 @@ public class RegisterController {
 
 	@RequestMapping(value = "/regist", method = RequestMethod.POST)
 	@ApiOperation(value="注册")
-	public String regist(
+	public ResponseEntity<Void> regist(
 			@ApiParam(defaultValue = "test001", required = true, value = "用户名") @RequestParam String userName,
 			@ApiParam(defaultValue = "111111", required = true, value = "密码") @RequestParam String password
 			) {
-
-		User user = new User();
-		user.setUsername(userName);
+		
+		User user = userRepository.findBySchemaPropertyValue("userName", userName);
+		if(user!=null){
+			 return ResponseEntity.status(201).build();
+		}
+		
+		user = new User();
+		user.setUserName(userName);
 		user.setPassword(DigestUtil.sha256_base64(password));
 		userRepository.save(user);
 
-		return "SUCCESS";
+		return  ResponseEntity.status(200).build();
 	}
 
 }
