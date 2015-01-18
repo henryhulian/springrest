@@ -1,5 +1,6 @@
 package com.springrest.restserver.service.impl;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.HashSet;
 
@@ -52,6 +53,7 @@ public class UserServiceImpl implements UserService{
 		
 		User user = new User();
 		user.setUserName(userName);
+		user.setBalance(new BigDecimal("0.00"));
 		user.setPassword(DigestUtil.sha256_base64(password));
 		userRepository.save(user);
 		

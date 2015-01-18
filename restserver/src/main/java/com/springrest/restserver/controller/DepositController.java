@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.springrest.restserver.domain.DepositOrder;
 import com.springrest.restserver.domain.User;
 import com.springrest.restserver.repository.DepositOrderRepository;
+import com.springrest.restserver.service.BalanceService;
 import com.springrest.restserver.service.UserService;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
@@ -32,6 +33,9 @@ public class DepositController {
 	
 	@Autowired
 	private DepositOrderRepository depositOrderRepository;
+	
+	@Autowired
+	private BalanceService balanceService;
 	
 	@RequestMapping(value = "/depositOrder", method = RequestMethod.POST)
 	@ApiOperation(value="创建存款订单")
@@ -50,6 +54,9 @@ public class DepositController {
 		depositOrder.setAmount(amount);
 		
 		depositOrderRepository.save(depositOrder);
+		
+		balanceService.increaseBalance(user.getId(), amount);
+		
 
 		return  ResponseEntity.ok().build();
 	}
