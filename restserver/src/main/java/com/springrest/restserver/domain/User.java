@@ -6,7 +6,6 @@ import java.util.Date;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.springframework.data.neo4j.annotation.GraphId;
-import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 
 import com.wordnik.swagger.annotations.ApiModel;
@@ -26,7 +25,6 @@ public class User implements Serializable{
 	@ApiModelProperty(value="用户id",position=1)
 	private Long id;
 	
-	@Indexed(unique=true)
 	@ApiModelProperty(value="用户名",position=2)
 	private String username;
 	

@@ -27,6 +27,9 @@ import com.springrest.restserver.interceptor.SecurityInterceptor;
 @ComponentScan
 public class Application extends WebMvcAutoConfigurationAdapter {
 	
+	@Value("${context.path}")
+	private String contextPath="/rest";
+	
 	@Value("${io.core}")
 	private Integer ioThread=2;
 	
@@ -58,7 +61,7 @@ public class Application extends WebMvcAutoConfigurationAdapter {
     public UndertowEmbeddedServletContainerFactory embeddedServletContainerFactory() {
         UndertowEmbeddedServletContainerFactory factory = new UndertowEmbeddedServletContainerFactory();
         
-        factory.setContextPath("/rest");
+        factory.setContextPath(contextPath);
         factory.setIoThreads(ioThread);
         factory.setWorkerThreads(ioMaxWorker);
         
