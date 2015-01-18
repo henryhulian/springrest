@@ -2,6 +2,7 @@ package com.springrest.restserver.controller;
 
 import java.math.BigDecimal;
 
+import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.springrest.restserver.domain.DepositOrder;
 import com.springrest.restserver.domain.User;
 import com.springrest.restserver.repository.DepositOrderRepository;
-import com.springrest.restserver.service.impl.UserServiceImpl;
+import com.springrest.restserver.service.UserService;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
@@ -27,23 +28,25 @@ import com.wordnik.swagger.annotations.ApiParam;
 public class DepositController {
 	
 	@Autowired
-	private UserServiceImpl userServiceImpl;
+	private UserService userService;
 	
 	@Autowired
 	private DepositOrderRepository depositOrderRepository;
 	
 	@RequestMapping(value = "/depositOrder", method = RequestMethod.POST)
 	@ApiOperation(value="创建存款订单")
+	@RolesAllowed("user")
 	public ResponseEntity<Void> regist(
 			@ApiParam( required = true, value = "金额") @RequestParam @NotNull @Min(value = 0) BigDecimal amount,
 			HttpServletRequest request) {
 		
 		
-		User user = userServiceImpl.findCurrentyUser(request);
+		User user = userService.findCurrentUserByRequest(request);
 		
 		DepositOrder depositOrder = new DepositOrder();
 		depositOrder.setUserId(user.getId());
 		depositOrder.setUserName(user.getUserName());
+		depositOrder.setStatus(0);
 		depositOrder.setAmount(amount);
 		
 		depositOrderRepository.save(depositOrder);

@@ -1,11 +1,14 @@
 package com.springrest.restserver.domain;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Set;
 
 import org.springframework.data.neo4j.annotation.GraphId;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
+import org.springframework.data.neo4j.annotation.RelatedTo;
 
 import com.wordnik.swagger.annotations.ApiModel;
 import com.wordnik.swagger.annotations.ApiModelProperty;
@@ -32,7 +35,12 @@ public class User implements Serializable{
 	
 	@ApiModelProperty(value="创建时间",position=4)
 	private Date createTime = new Date(System.currentTimeMillis());
+	
+	private BigDecimal balance;
 
+	@RelatedTo(elementClass=Role.class,type="HAS_ROLE")
+	private Set<Role> roles;
+	
 
 	public String getPassword() {
 		return password;
@@ -64,6 +72,22 @@ public class User implements Serializable{
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+
+	public BigDecimal getBalance() {
+		return balance;
+	}
+
+	public void setBalance(BigDecimal balance) {
+		this.balance = balance;
 	}
 	
 }

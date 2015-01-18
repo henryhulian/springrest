@@ -10,11 +10,12 @@ import com.springrest.restserver.ConfigurationBean;
 import com.springrest.restserver.domain.Session;
 import com.springrest.restserver.repository.SessionRepository;
 import com.springrest.restserver.repository.UserRepository;
+import com.springrest.restserver.service.SessionService;
 import com.springrest.restserver.util.AESUtil;
 
 @Service
 @Transactional
-public class SessionServiceImpl {
+public class SessionServiceImpl implements SessionService{
 	
 	private static Log log = LogFactory.getLog(SessionServiceImpl.class);
 
@@ -27,6 +28,7 @@ public class SessionServiceImpl {
 	@Autowired
 	private SessionRepository sessionRepository;
 
+	@Override
 	public Session findSessionByToken(String token) {
 
 		Long sessionId = null;

@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springrest.restserver.domain.User;
-import com.springrest.restserver.repository.UserRepository;
-import com.springrest.restserver.util.DigestUtil;
+import com.springrest.restserver.service.UserService;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
@@ -23,7 +22,8 @@ public class RegisterController {
 	private static Log log = LogFactory.getLog(RegisterController.class);
 
 	@Autowired
-	private UserRepository userRepository;
+	private UserService userService;
+	
 
 	@RequestMapping(value = "/regist", method = RequestMethod.POST)
 	@ApiOperation(value="注册")
@@ -32,15 +32,12 @@ public class RegisterController {
 			@ApiParam(defaultValue = "111111", required = true, value = "密码") @RequestParam String password
 			) {
 		
-		User user = userRepository.findBySchemaPropertyValue("userName", userName);
+		User user = userService.findUserByUserName(userName);
 		if(user!=null){
 			 return ResponseEntity.status(201).build();
 		}
 		
-		user = new User();
-		user.setUserName(userName);
-		user.setPassword(DigestUtil.sha256_base64(password));
-		userRepository.save(user);
+		user = userService.createUserAndAuthorization(userName, password);
 		
 		log.trace("Create:"+user.getUserName());
 

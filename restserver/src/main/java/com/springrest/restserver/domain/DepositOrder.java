@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import org.springframework.data.neo4j.annotation.GraphId;
+import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 
 @NodeEntity
@@ -23,6 +24,9 @@ public class DepositOrder implements Serializable{
 	private String userName;
 	
 	private BigDecimal amount;
+	
+	@Indexed
+	private Integer status;
 	
 	private Date createTime;
 
@@ -64,6 +68,14 @@ public class DepositOrder implements Serializable{
 
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 	
 }

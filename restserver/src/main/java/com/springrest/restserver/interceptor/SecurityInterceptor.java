@@ -8,14 +8,15 @@ import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-
 import com.springrest.restserver.domain.Session;
 import com.springrest.restserver.service.Authorization;
-import com.springrest.restserver.service.impl.SessionServiceImpl;
+import com.springrest.restserver.service.SessionService;
 import com.springrest.restserver.util.CookieUtil;
 import com.springrest.restserver.util.IpUtil;
 import com.springrest.restserver.util.TokenUtil;
@@ -24,8 +25,10 @@ import com.springrest.restserver.util.TokenUtil;
 @Component
 public class SecurityInterceptor extends HandlerInterceptorAdapter{
 	
+	private static Log log = LogFactory.getLog(SecurityInterceptor.class);
+	
 	@Autowired
-	private SessionServiceImpl sessionService;
+	private SessionService sessionService;
 	
 	@Autowired
 	private Authorization authorization;
@@ -65,7 +68,8 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter{
 	            RolesAllowed rolesAnnotation = method.getMethodAnnotation(RolesAllowed.class);
 	            Set<String> rolesSet = new HashSet<String>(Arrays.asList(rolesAnnotation.value()));
 	            
-	            if( !authorization.isUserAllowed(session.getUserName(), rolesSet)){
+	            if( !authorization.isUserAllowed(session.getUserId(), rolesSet)){
+	            	 log.trace("User:"+session.getUserName()+" do not has in role:"+rolesSet);
 	            	 response.sendError(403);
 	                 return false;
 	            }
