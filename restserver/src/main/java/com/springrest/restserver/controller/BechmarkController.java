@@ -67,6 +67,11 @@ public class BechmarkController {
 		return  ResponseEntity.ok().build();
 	}
 
+	@RequestMapping(value = "/depositOrderCount", method = RequestMethod.GET)
+	@ApiOperation(value="存款订单count")
+	public Long count() {
+		return  depositOrderRepository.count();
+	}
 
 	
 }

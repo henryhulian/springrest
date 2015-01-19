@@ -3,12 +3,14 @@ package com.springrest.restserver.domain;
 import java.io.Serializable;
 import java.util.Date;
 
-import org.springframework.data.neo4j.annotation.GraphId;
-import org.springframework.data.neo4j.annotation.NodeEntity;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-@NodeEntity
+@Entity
 public class Session  implements Serializable{
 	
 	/**
@@ -17,7 +19,8 @@ public class Session  implements Serializable{
 	private static final long serialVersionUID = -3600879727090351823L;
 	
 	
-	@GraphId
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	
 	private String userName;

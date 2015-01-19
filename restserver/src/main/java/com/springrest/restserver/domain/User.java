@@ -3,17 +3,16 @@ package com.springrest.restserver.domain;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Set;
 
-import org.springframework.data.neo4j.annotation.GraphId;
-import org.springframework.data.neo4j.annotation.Indexed;
-import org.springframework.data.neo4j.annotation.NodeEntity;
-import org.springframework.data.neo4j.annotation.RelatedTo;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 import com.wordnik.swagger.annotations.ApiModel;
 import com.wordnik.swagger.annotations.ApiModelProperty;
 
-@NodeEntity
+@Entity
 @ApiModel(value="会员实体")
 public class User implements Serializable{
 	
@@ -22,12 +21,12 @@ public class User implements Serializable{
 	 */
 	private static final long serialVersionUID = -7924386144273140685L;
 
-	@GraphId
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@ApiModelProperty(value="用户id",position=1)
 	private Long id;
 	
 	@ApiModelProperty(value="用户名",position=2)
-	@Indexed
 	private String userName;
 	
 	@ApiModelProperty(value="密码",position=3)
@@ -37,10 +36,6 @@ public class User implements Serializable{
 	private Date createTime = new Date(System.currentTimeMillis());
 	
 	private BigDecimal balance;
-
-	@RelatedTo(elementClass=Role.class,type="HAS_ROLE")
-	private Set<Role> roles;
-	
 
 	public String getPassword() {
 		return password;
@@ -72,14 +67,6 @@ public class User implements Serializable{
 
 	public void setUserName(String userName) {
 		this.userName = userName;
-	}
-
-	public Set<Role> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
 	}
 
 	public BigDecimal getBalance() {

@@ -58,8 +58,7 @@ public class AuthenticationServiceImpl implements Authenticatior,Authorization{
 	public int login(String userName, String password,
 			HttpServletRequest request, HttpServletResponse response) {
 
-		User user = userRepository.findBySchemaPropertyValue("userName",
-				userName);
+		User user = userRepository.findUserByUserName(userName);
 
 		if (!DigestUtil.sha256_base64(password).equals(user.getPassword())) {
 			return Code.ERROR_PASSWORD_OR_USERNAME_NOT_MATCH;
@@ -114,7 +113,6 @@ public class AuthenticationServiceImpl implements Authenticatior,Authorization{
 		while( iterator.hasNext() ){
 			String name = iterator.next();
 			Role role = roleService.findOrCreateRoleByName(name);
-			user.getRoles().add(role);
 		}
 		
 		userRepository.save(user);

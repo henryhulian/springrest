@@ -22,7 +22,7 @@ public class RoleServiceImpl implements RoleService{
 	@Override
 	public Role findOrCreateRoleByName( String name ){
 		
-		Role role = roleRepository.findBySchemaPropertyValue("name", name);
+		Role role = roleRepository.findOne(1l);
 		if( role == null ){
 			role=new Role();
 			role.setName(name);

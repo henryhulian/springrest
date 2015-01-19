@@ -4,11 +4,13 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import org.springframework.data.neo4j.annotation.GraphId;
-import org.springframework.data.neo4j.annotation.Indexed;
-import org.springframework.data.neo4j.annotation.NodeEntity;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-@NodeEntity
+
+@Entity
 public class DepositOrder implements Serializable{
 
 	/**
@@ -16,7 +18,8 @@ public class DepositOrder implements Serializable{
 	 */
 	private static final long serialVersionUID = 1985797646890820686L;
 
-	@GraphId
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	
 	private Long userId;
@@ -25,7 +28,6 @@ public class DepositOrder implements Serializable{
 	
 	private BigDecimal amount;
 	
-	@Indexed
 	private Integer status;
 	
 	private Date createTime;

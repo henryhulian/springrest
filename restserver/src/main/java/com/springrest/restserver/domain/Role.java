@@ -1,19 +1,20 @@
 package com.springrest.restserver.domain;
 
-import org.springframework.data.neo4j.annotation.GraphId;
-import org.springframework.data.neo4j.annotation.Indexed;
-import org.springframework.data.neo4j.annotation.NodeEntity;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 
 import com.wordnik.swagger.annotations.ApiModel;
 
-@NodeEntity
+@Entity
 @ApiModel(value="会员实体")
 public class Role {
 	
-	@GraphId
+	@Id
 	private Long id;
 	
-	@Indexed
+	private Long userId;
+	
 	private String name;
 	
 	
@@ -62,6 +63,14 @@ public class Role {
 		} else if (!name.equals(other.name))
 			return false;
 		return true;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 	
 }
