@@ -4,11 +4,10 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import org.springframework.data.neo4j.annotation.GraphId;
-import org.springframework.data.neo4j.annotation.Indexed;
-import org.springframework.data.neo4j.annotation.NodeEntity;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.gemfire.mapping.Region;
 
-@NodeEntity
+@Region("DepositOrder")
 public class DepositOrder implements Serializable{
 
 	/**
@@ -16,8 +15,8 @@ public class DepositOrder implements Serializable{
 	 */
 	private static final long serialVersionUID = 1985797646890820686L;
 
-	@GraphId
-	private Long id;
+	@Id
+	private String id;
 	
 	private Long userId;
 	
@@ -25,16 +24,15 @@ public class DepositOrder implements Serializable{
 	
 	private BigDecimal amount;
 	
-	@Indexed
 	private Integer status;
 	
 	private Date createTime;
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

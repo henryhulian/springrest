@@ -3,12 +3,15 @@ package com.springrest.restserver.domain;
 import java.io.Serializable;
 import java.util.Date;
 
-import org.springframework.data.neo4j.annotation.GraphId;
-import org.springframework.data.neo4j.annotation.NodeEntity;
+
+
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.gemfire.mapping.Region;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-@NodeEntity
+@Region("DepositOrder")
 public class Session  implements Serializable{
 	
 	/**
@@ -16,8 +19,7 @@ public class Session  implements Serializable{
 	 */
 	private static final long serialVersionUID = -3600879727090351823L;
 	
-	
-	@GraphId
+	@Id
 	private Long id;
 	
 	private String userName;

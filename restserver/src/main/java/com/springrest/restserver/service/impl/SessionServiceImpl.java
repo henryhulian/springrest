@@ -44,9 +44,9 @@ public class SessionServiceImpl implements SessionService{
 			return null;
 		}
 		
-		Session session = sessionRepository.findOne(sessionId);
+		//Session session = sessionRepository.findOne(sessionId);
 		
 
-		return session;
+		return null;
 	}
 }

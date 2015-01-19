@@ -1,19 +1,18 @@
 package com.springrest.restserver.domain;
 
-import org.springframework.data.neo4j.annotation.GraphId;
-import org.springframework.data.neo4j.annotation.Indexed;
-import org.springframework.data.neo4j.annotation.NodeEntity;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.gemfire.mapping.Region;
 
 import com.wordnik.swagger.annotations.ApiModel;
 
-@NodeEntity
 @ApiModel(value="会员实体")
+@Region("DepositOrder")
 public class Role {
 	
-	@GraphId
+	@Id
 	private Long id;
 	
-	@Indexed
 	private String name;
 	
 	

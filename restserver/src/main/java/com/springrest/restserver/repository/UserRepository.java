@@ -1,9 +1,10 @@
 package com.springrest.restserver.repository;
 
-import org.springframework.data.neo4j.repository.GraphRepository;
+import org.springframework.data.gemfire.repository.GemfireRepository;
+
 
 import com.springrest.restserver.domain.User;
 
-public interface UserRepository extends GraphRepository<User>{
+public interface UserRepository extends GemfireRepository<User,Long>{
 	
 }

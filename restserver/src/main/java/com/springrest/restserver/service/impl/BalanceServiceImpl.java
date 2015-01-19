@@ -21,10 +21,10 @@ public class BalanceServiceImpl implements BalanceService{
 	@Override
 	public int increaseBalance(Long userId, BigDecimal amount) {
 		
-		User user = userRepository.findOne(userId);
-		user.setBalance(user.getBalance().add(amount));
+		//User user = userRepository.findOne(userId);
+		//user.setBalance(user.getBalance().add(amount));
 		
-		userRepository.save(user);
+		//userRepository.save(user);
 		
 		return Code.SUCCESS;
 	}
@@ -32,10 +32,10 @@ public class BalanceServiceImpl implements BalanceService{
 	@Override
 	public int decreaseBalance(Long userId, BigDecimal amount) {
 		
-		User user = userRepository.findOne(userId);
-		user.setBalance(user.getBalance().subtract(amount));
+		//User user = userRepository.findOne(userId);
+		//user.setBalance(user.getBalance().subtract(amount));
 		
-		userRepository.save(user);
+		//userRepository.save(user);
 		
 		return Code.SUCCESS;
 	}
