@@ -54,9 +54,6 @@ public class DepositController {
 		depositOrder.setAmount(amount);
 		
 		depositOrderRepository.save(depositOrder);
-		
-		balanceService.increaseBalance(user.getId(), amount);
-		
 
 		return  ResponseEntity.ok().build();
 	}
