@@ -58,8 +58,8 @@ public class AuthenticationServiceImpl implements Authenticatior,Authorization{
 	public int login(String userName, String password,
 			HttpServletRequest request, HttpServletResponse response) {
 
-		User user = userRepository.findBySchemaPropertyValue("userName",
-				userName);
+		User user = null; //userRepository.findBySchemaPropertyValue("userName",
+				//userName);
 
 		if (!DigestUtil.sha256_base64(password).equals(user.getPassword())) {
 			return Code.ERROR_PASSWORD_OR_USERNAME_NOT_MATCH;
@@ -69,7 +69,7 @@ public class AuthenticationServiceImpl implements Authenticatior,Authorization{
 		session.setUserName(userName);
 		session.setUserId(user.getId());
 		session.setSessionIp(IpUtil.getIp(request));
-		session=sessionRepository.save(session);
+		//session=sessionRepository.save(session);
 
 		try {
 			session.setSessionSign(AESUtil.encrypt(
@@ -78,7 +78,7 @@ public class AuthenticationServiceImpl implements Authenticatior,Authorization{
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-		sessionRepository.save(session);
+		//sessionRepository.save(session);
 
 		CookieUtil.setCookie(response, TokenUtil.TOKEN_COOKIE_NMAE,
 				session.getSessionSign(), request.getContextPath(), true, -1);
@@ -108,16 +108,16 @@ public class AuthenticationServiceImpl implements Authenticatior,Authorization{
 	@Override
 	public int authorization(Long userId, Set<String> rolesSet) {
 		
-		User user = userRepository.findOne(userId);
+		//User user = userRepository.findOne(userId);
 		
 		Iterator<String> iterator = rolesSet.iterator();
 		while( iterator.hasNext() ){
 			String name = iterator.next();
 			Role role = roleService.findOrCreateRoleByName(name);
-			user.getRoles().add(role);
+			//user.getRoles().add(role);
 		}
 		
-		userRepository.save(user);
+		//userRepository.save(user);
 		
 		return Code.SUCCESS;
 	}

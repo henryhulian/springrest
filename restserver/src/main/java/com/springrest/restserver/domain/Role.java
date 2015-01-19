@@ -1,19 +1,13 @@
 package com.springrest.restserver.domain;
 
-import org.springframework.data.neo4j.annotation.GraphId;
-import org.springframework.data.neo4j.annotation.Indexed;
-import org.springframework.data.neo4j.annotation.NodeEntity;
 
 import com.wordnik.swagger.annotations.ApiModel;
 
-@NodeEntity
 @ApiModel(value="会员实体")
 public class Role {
 	
-	@GraphId
 	private Long id;
 	
-	@Indexed
 	private String name;
 	
 	

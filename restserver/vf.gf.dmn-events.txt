@@ -1,0 +1,6 @@
+2015-01-19T20:21:22,INFO,EventManagerStartedEvent,
+2015-01-19T20:21:22,INFO,LicenseActivatedEvent,expirationDate=unset|expirationType=floating-eval|serialNumber=G04E0-MFK43-M8E1H-0ZARK-AV25A|allowedVersions=vf.gf.dmn-6+vf.gf.dmn-7|available=60
+2015-01-19T20:21:22,INFO,LicenseActivatedEvent,expirationDate=unset|expirationType=floating-eval|serialNumber=G04E0-MFK43-M8E1H-0ZARK-AV25A|allowedVersions=vf.gf.dmn-6+vf.gf.dmn-7|available=60
+2015-01-19T20:21:22,INFO,UpdatedLicenseStateEvent,enforcement=soft|licenseType=local|expirationDate=permanent|used=0|available=60|addons=vf.gf.evaluation
+2015-01-19T20:21:23,INFO,ComponentStateChangeEvent,instanceIdType=self|instanceId=self|timestamp=2015-01-19T20:21:22|state=on
+2015-01-19T20:21:23,INFO,UpdatedLicenseStateEvent,enforcement=soft|licenseType=local|expirationDate=2015-03-20T20:21:23|used=4|available=60|addons=vf.gf.evaluation

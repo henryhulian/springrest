@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService{
 
 		Session session = sessionService.findSessionByToken(token);
 		
-		User user = userRepository.findOne(session.getUserId());
+		User user = null;//userRepository.findOne(session.getUserId());
 
 		return user;
 	}
@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService{
 		user.setUserName(userName);
 		user.setBalance(new BigDecimal("0.00"));
 		user.setPassword(DigestUtil.sha256_base64(password));
-		userRepository.save(user);
+		//userRepository.save(user);
 		
 		authorization.authorization(user.getId(), new HashSet<>(Arrays.asList("user")));
 
@@ -64,6 +64,7 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public User findUserByUserName(String userName) {
-		return userRepository.findBySchemaPropertyValue("userName", userName);
+		//return userRepository.findBySchemaPropertyValue("userName", userName);
+		return null;
 	}
 }

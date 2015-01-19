@@ -5,15 +5,9 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
 
-import org.springframework.data.neo4j.annotation.GraphId;
-import org.springframework.data.neo4j.annotation.Indexed;
-import org.springframework.data.neo4j.annotation.NodeEntity;
-import org.springframework.data.neo4j.annotation.RelatedTo;
-
 import com.wordnik.swagger.annotations.ApiModel;
 import com.wordnik.swagger.annotations.ApiModelProperty;
 
-@NodeEntity
 @ApiModel(value="会员实体")
 public class User implements Serializable{
 	
@@ -22,12 +16,10 @@ public class User implements Serializable{
 	 */
 	private static final long serialVersionUID = -7924386144273140685L;
 
-	@GraphId
 	@ApiModelProperty(value="用户id",position=1)
 	private Long id;
 	
 	@ApiModelProperty(value="用户名",position=2)
-	@Indexed
 	private String userName;
 	
 	@ApiModelProperty(value="密码",position=3)
@@ -38,7 +30,6 @@ public class User implements Serializable{
 	
 	private BigDecimal balance;
 
-	@RelatedTo(elementClass=Role.class,type="HAS_ROLE")
 	private Set<Role> roles;
 	
 
