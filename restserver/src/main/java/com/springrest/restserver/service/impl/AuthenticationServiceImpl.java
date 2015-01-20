@@ -17,9 +17,11 @@ import com.springrest.restserver.common.Code;
 import com.springrest.restserver.domain.Role;
 import com.springrest.restserver.domain.Session;
 import com.springrest.restserver.domain.User;
+import com.springrest.restserver.domain.UserRole;
 import com.springrest.restserver.repository.RoleRepository;
 import com.springrest.restserver.repository.SessionRepository;
 import com.springrest.restserver.repository.UserRepository;
+import com.springrest.restserver.repository.UserRoleRepository;
 import com.springrest.restserver.service.Authenticatior;
 import com.springrest.restserver.service.Authorization;
 import com.springrest.restserver.service.RoleService;
@@ -41,6 +43,9 @@ public class AuthenticationServiceImpl implements Authenticatior,Authorization{
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private UserRoleRepository userRoleRepository;
 
 	@Autowired
 	private SessionRepository sessionRepository;
@@ -95,7 +100,7 @@ public class AuthenticationServiceImpl implements Authenticatior,Authorization{
 			
 			String name = iterator.next();
 			
-			Set<String> rolesHas = roleRepository.findRolesForUserByUserId(userId);
+			Set<String> rolesHas = userRoleRepository.findRolesForUserByUserId(userId);
 			if(rolesHas.contains(name)){
 				return true;
 			}
@@ -107,15 +112,15 @@ public class AuthenticationServiceImpl implements Authenticatior,Authorization{
 	@Override
 	public int authorization(Long userId, Set<String> rolesSet) {
 		
-		User user = userRepository.findOne(userId);
-		
 		Iterator<String> iterator = rolesSet.iterator();
 		while( iterator.hasNext() ){
 			String name = iterator.next();
 			Role role = roleService.findOrCreateRoleByName(name);
+			UserRole userRole = new UserRole();
+			userRole.setUserId(userId);
+			userRole.setRoleName(role.getName());
+			userRoleRepository.save(userRole);
 		}
-		
-		userRepository.save(user);
 		
 		return Code.SUCCESS;
 	}

@@ -22,7 +22,7 @@ public class User implements Serializable{
 	private static final long serialVersionUID = -7924386144273140685L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@ApiModelProperty(value="用户id",position=1)
 	private Long id;
 	

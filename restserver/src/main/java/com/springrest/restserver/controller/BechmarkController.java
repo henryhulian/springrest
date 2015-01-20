@@ -18,7 +18,8 @@ import com.springrest.restserver.service.BalanceService;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 
-@RestController("/bechmark")
+@RestController
+@RequestMapping("/bechmark")
 @Api(value = "/bechmark", description = "压力测试模块")
 public class BechmarkController {
 	

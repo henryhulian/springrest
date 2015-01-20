@@ -1,8 +1,9 @@
 package com.springrest.restserver.domain;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
 
 import com.wordnik.swagger.annotations.ApiModel;
 
@@ -11,6 +12,7 @@ import com.wordnik.swagger.annotations.ApiModel;
 public class Role {
 	
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
 	private Long userId;

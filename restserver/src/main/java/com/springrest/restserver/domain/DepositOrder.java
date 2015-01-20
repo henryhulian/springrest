@@ -8,9 +8,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.Table;
 
 
 @Entity
+@Table(indexes={@Index(columnList="userId"),@Index(columnList="userName")})
 public class DepositOrder implements Serializable{
 
 	/**
@@ -19,7 +22,7 @@ public class DepositOrder implements Serializable{
 	private static final long serialVersionUID = 1985797646890820686L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
 	private Long userId;

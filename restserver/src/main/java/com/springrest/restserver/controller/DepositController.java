@@ -1,6 +1,8 @@
 package com.springrest.restserver.controller;
 
 import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
 
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +20,7 @@ import com.springrest.restserver.domain.DepositOrder;
 import com.springrest.restserver.domain.User;
 import com.springrest.restserver.repository.DepositOrderRepository;
 import com.springrest.restserver.service.BalanceService;
+import com.springrest.restserver.service.DepositOrderService;
 import com.springrest.restserver.service.UserService;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
@@ -30,6 +33,9 @@ public class DepositController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private DepositOrderService depositOrderService;
 	
 	@Autowired
 	private DepositOrderRepository depositOrderRepository;
@@ -52,10 +58,32 @@ public class DepositController {
 		depositOrder.setUserName(user.getUserName());
 		depositOrder.setStatus(0);
 		depositOrder.setAmount(amount);
+		depositOrder.setCreateTime(new Date());
 		
 		depositOrderRepository.save(depositOrder);
 
 		return  ResponseEntity.ok().build();
+	}
+	
+	@RequestMapping(value = "/depositOrder", method = RequestMethod.GET)
+	@ApiOperation(value="查询存款订单")
+	@RolesAllowed("user")
+	public List<DepositOrder> findDepositOrderByUserId(
+			HttpServletRequest request) {
+		
+		User user = userService.findCurrentUserByRequest(request);
+
+		return  depositOrderRepository.findDepositOrderByUserId(user.getId());
+	}
+	
+	@RequestMapping(value = "/depositOrder", method = RequestMethod.PUT)
+	@ApiOperation(value="审核存款订单")
+	public void auditDepositOrder(
+			@ApiParam( required = true, value = "存款订单ID") @RequestParam Long depositOrderId,
+			HttpServletRequest request) {
+		
+		depositOrderService.auditDepositOrder(depositOrderId);
+
 	}
 
 }
