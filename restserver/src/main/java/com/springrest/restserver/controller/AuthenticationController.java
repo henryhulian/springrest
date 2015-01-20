@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.springrest.restserver.repository.UserRepository;
+import com.springrest.restserver.repository.user.UserRepository;
 import com.springrest.restserver.service.Authenticatior;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;

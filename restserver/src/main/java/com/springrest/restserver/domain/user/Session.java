@@ -1,14 +1,11 @@
-package com.springrest.restserver.domain;
+package com.springrest.restserver.domain.user;
 
 import java.io.Serializable;
-import java.util.Date;
-
+import java.sql.Timestamp;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class Session  implements Serializable{
@@ -31,11 +28,9 @@ public class Session  implements Serializable{
 	
 	private String sessionSign="";
 	
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-	private Date createTime=new Date(System.currentTimeMillis());
+	private Timestamp createTime=new Timestamp(System.currentTimeMillis());
 	
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-	private Date lassAccessTime=new Date(System.currentTimeMillis());
+	private Timestamp lassAccessTime=new Timestamp(System.currentTimeMillis());
 	
 	
 	public String getSessionIp() {
@@ -54,19 +49,19 @@ public class Session  implements Serializable{
 		this.sessionSign = sessionSign;
 	}
 
-	public Date getCreateTime() {
+	public Timestamp getCreateTime() {
 		return createTime;
 	}
 
-	public void setCreateTime(Date createTime) {
+	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
 	}
 
-	public Date getLassAccessTime() {
+	public Timestamp getLassAccessTime() {
 		return lassAccessTime;
 	}
 
-	public void setLassAccessTime(Date lassAccessTime) {
+	public void setLassAccessTime(Timestamp lassAccessTime) {
 		this.lassAccessTime = lassAccessTime;
 	}
 	

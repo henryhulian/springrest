@@ -3,13 +3,13 @@ package com.springrest.restserver.service.impl;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.springrest.restserver.ConfigurationBean;
-import com.springrest.restserver.domain.Session;
-import com.springrest.restserver.repository.SessionRepository;
-import com.springrest.restserver.repository.UserRepository;
+import com.springrest.restserver.domain.user.Session;
+import com.springrest.restserver.repository.user.SessionRepository;
+import com.springrest.restserver.repository.user.UserRepository;
 import com.springrest.restserver.service.SessionService;
 import com.springrest.restserver.util.AESUtil;
 
@@ -18,9 +18,9 @@ import com.springrest.restserver.util.AESUtil;
 public class SessionServiceImpl implements SessionService{
 	
 	private static Log log = LogFactory.getLog(SessionServiceImpl.class);
-
+	
 	@Autowired
-	private ConfigurationBean configurationBean;
+	Environment env;
 
 	@Autowired
 	private UserRepository userRepository;
@@ -33,7 +33,7 @@ public class SessionServiceImpl implements SessionService{
 
 		Long sessionId = null;
 		try {
-			sessionId = Long.parseLong(AESUtil.decrypt(token, configurationBean.getSessionKey()));
+			sessionId = Long.parseLong(AESUtil.decrypt(token,env.getProperty("session.key")));
 		} catch (NumberFormatException e) {
 			log.warn(e);
 		} catch (Exception e) {

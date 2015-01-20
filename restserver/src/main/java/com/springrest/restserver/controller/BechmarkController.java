@@ -1,8 +1,9 @@
 package com.springrest.restserver.controller;
 
 import java.math.BigDecimal;
-
+import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.springrest.restserver.domain.DepositOrder;
-import com.springrest.restserver.repository.DepositOrderRepository;
+import com.springrest.restserver.domain.order.DepositOrder;
+import com.springrest.restserver.repository.order.DepositOrderRepository;
 import com.springrest.restserver.service.BalanceService;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
@@ -29,6 +30,7 @@ public class BechmarkController {
 	@Autowired
 	private DepositOrderRepository depositOrderRepository;
 	
+	
 	@Autowired
 	private BalanceService balanceService;
 	
@@ -41,6 +43,7 @@ public class BechmarkController {
 		depositOrder.setUserId(1000L);
 		depositOrder.setUserName("BENCHMARK");
 		depositOrder.setStatus(0);
+		depositOrder.setCreateTime(new Date());
 		depositOrder.setAmount(new BigDecimal("100.00"));
 		
 		depositOrderRepository.save(depositOrder);
@@ -59,6 +62,7 @@ public class BechmarkController {
 			depositOrder.setUserId(1000L);
 			depositOrder.setUserName("BENCHMARK");
 			depositOrder.setStatus(0);
+			depositOrder.setCreateTime(new Date());
 			depositOrder.setAmount(new BigDecimal("100.00"));
 			depositOrderRepository.save(depositOrder);
 		}
@@ -67,6 +71,18 @@ public class BechmarkController {
 		log.debug("cost:"+(timeEnd-timeStart));
 		return  ResponseEntity.ok().build();
 	}
+	
+	
+	/*@RequestMapping(value = "/depositOrderList", method = RequestMethod.GET)
+	@ApiOperation(value="存款订单count")
+	public List<DepositOrder> list() {
+		
+		List<DepositOrder> depositOrders = depositOrderRepository.findDepositOrder();
+		Collections.reverse(depositOrders);	
+		
+		return  depositOrders;
+		
+	}*/
 
 	@RequestMapping(value = "/depositOrderCount", method = RequestMethod.GET)
 	@ApiOperation(value="存款订单count")

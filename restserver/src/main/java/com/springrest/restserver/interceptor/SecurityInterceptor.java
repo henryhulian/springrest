@@ -11,10 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.Cache;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-import com.springrest.restserver.domain.Session;
+
+import com.springrest.restserver.domain.user.Session;
 import com.springrest.restserver.service.Authorization;
 import com.springrest.restserver.service.SessionService;
 import com.springrest.restserver.util.CookieUtil;
@@ -32,6 +35,9 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter{
 	
 	@Autowired
 	private Authorization authorization;
+	
+	@Value("#{cacheManager.getCache('session')}")
+	private Cache sessionCache;
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request,

@@ -1,6 +1,6 @@
 package com.springrest.restserver.service;
 
-import com.springrest.restserver.domain.Session;
+import com.springrest.restserver.domain.user.Session;
 
 public interface SessionService {
 

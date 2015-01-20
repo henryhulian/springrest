@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.springrest.restserver.domain.DepositOrder;
-import com.springrest.restserver.domain.User;
-import com.springrest.restserver.repository.DepositOrderRepository;
+import com.springrest.restserver.domain.order.DepositOrder;
+import com.springrest.restserver.domain.user.User;
+import com.springrest.restserver.repository.order.DepositOrderRepository;
 import com.springrest.restserver.service.BalanceService;
 import com.springrest.restserver.service.DepositOrderService;
 import com.springrest.restserver.service.UserService;
@@ -72,17 +72,19 @@ public class DepositController {
 			HttpServletRequest request) {
 		
 		User user = userService.findCurrentUserByRequest(request);
-
-		return  depositOrderRepository.findDepositOrderByUserId(user.getId());
+		List<DepositOrder> depositOrders = depositOrderRepository.findDepositOrderByUserId(user.getId());
+		
+		return  depositOrders;
 	}
 	
 	@RequestMapping(value = "/depositOrder", method = RequestMethod.PUT)
 	@ApiOperation(value="审核存款订单")
 	public void auditDepositOrder(
-			@ApiParam( required = true, value = "存款订单ID") @RequestParam Long depositOrderId,
+			@ApiParam( required = true, value = "会员ID") @RequestParam String userid,
+			@ApiParam( required = true, value = "存款订单ID") @RequestParam String depositOrderId,
 			HttpServletRequest request) {
 		
-		depositOrderService.auditDepositOrder(depositOrderId);
+		depositOrderService.auditDepositOrder(userid,depositOrderId);
 
 	}
 

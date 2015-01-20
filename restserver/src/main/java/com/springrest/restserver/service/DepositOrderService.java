@@ -2,6 +2,6 @@ package com.springrest.restserver.service;
 
 public interface DepositOrderService {
 
-	public void auditDepositOrder( Long depositOrderId );
+	public void auditDepositOrder( String userId , String depositOrderId );
 	
 }

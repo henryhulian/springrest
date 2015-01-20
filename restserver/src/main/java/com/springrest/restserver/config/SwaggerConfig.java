@@ -1,4 +1,4 @@
-package com.springrest.restserver;
+package com.springrest.restserver.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -19,7 +19,6 @@ public class SwaggerConfig {
 		}
 		
 		@Bean
-		// Don't forget the @Bean annotation
 		public SwaggerSpringMvcPlugin customImplementation() {
 			return new SwaggerSpringMvcPlugin(this.springSwaggerConfig).apiInfo(
 					apiInfo());

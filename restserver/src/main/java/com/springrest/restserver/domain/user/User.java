@@ -1,4 +1,4 @@
-package com.springrest.restserver.domain;
+package com.springrest.restserver.domain.user;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

@@ -2,19 +2,26 @@ package com.springrest.restserver;
 
 import io.undertow.Undertow.Builder;
 
+import java.io.IOException;
+
+import org.infinispan.manager.DefaultCacheManager;
+import org.infinispan.spring.provider.SpringEmbeddedCacheManager;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.ErrorMvcAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter;
 import org.springframework.boot.context.embedded.undertow.UndertowBuilderCustomizer;
 import org.springframework.boot.context.embedded.undertow.UndertowEmbeddedServletContainerFactory;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.core.env.Environment;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.xnio.Options;
@@ -23,26 +30,15 @@ import com.mangofactory.swagger.plugin.EnableSwagger;
 import com.springrest.restserver.interceptor.SecurityInterceptor;
 
 @Configuration
-@EnableAutoConfiguration(exclude = { ErrorMvcAutoConfiguration.class })
-@EnableTransactionManagement
+@EnableAutoConfiguration(exclude = { ErrorMvcAutoConfiguration.class ,DataSourceAutoConfiguration.class, JpaRepositoriesAutoConfiguration.class , HibernateJpaAutoConfiguration.class})
 @EnableWebMvc
 @EnableSwagger
+@EnableCaching
 @ComponentScan
-@EnableConfigurationProperties
 public class Application extends WebMvcAutoConfigurationAdapter {
-
-	@Value("${context.path}")
-	private String contextPath = "/rest";
 	
-	@Value("${session.key}")
-	private String sessionKey = "wXf;7-*!i)&d7TCM";
-
-	@Value("${io.core}")
-	private Integer ioThread = 2;
-
-	@Value("${io.worker.max}")
-	private Integer ioMaxWorker = 10;
-
+	@Autowired
+	Environment env;
 
 	@Autowired
 	SecurityInterceptor securityInterceptor;
@@ -53,30 +49,38 @@ public class Application extends WebMvcAutoConfigurationAdapter {
 		super.addInterceptors(registry);
 
 	}
-
-
+	
 	@Bean
-	public ConfigurationBean configurationBean() {
-		ConfigurationBean configurationBean = new ConfigurationBean();
-		configurationBean.setSessionKey(sessionKey);
-		return configurationBean;
-	}
+    public CacheManager cacheManager() {
+			CacheManager cacheManager;
+			try {
+				DefaultCacheManager defaultCacheManager = new DefaultCacheManager("config/infinispan.xml");
+				cacheManager = new SpringEmbeddedCacheManager(defaultCacheManager);
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+         return  cacheManager;
+    }
+
 
 	@Bean
 	public UndertowEmbeddedServletContainerFactory embeddedServletContainerFactory() {
 		UndertowEmbeddedServletContainerFactory factory = new UndertowEmbeddedServletContainerFactory();
 
-		factory.setContextPath(contextPath);
+		factory.setContextPath(env.getProperty("context.path"));
 
 		factory.addBuilderCustomizers(new UndertowBuilderCustomizer() {
 
 			@Override
 			public void customize(Builder build) {
-				build.setWorkerOption(Options.WORKER_IO_THREADS, ioThread);
+				
+				Integer maxWorker =  env.getProperty("io.worker.max",Integer.class,Runtime.getRuntime().availableProcessors() + 1);
+				
+				build.setWorkerOption(Options.WORKER_IO_THREADS, env.getProperty("io.core",Integer.class,Runtime.getRuntime().availableProcessors() + 1));
 				build.setWorkerOption(Options.WORKER_TASK_CORE_THREADS,
-						ioMaxWorker / 2);
+						maxWorker / 2);
 				build.setWorkerOption(Options.WORKER_TASK_MAX_THREADS,
-						ioMaxWorker);
+						maxWorker);
 			}
 
 		});

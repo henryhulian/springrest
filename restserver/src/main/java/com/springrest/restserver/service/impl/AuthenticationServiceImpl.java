@@ -9,19 +9,19 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.springrest.restserver.ConfigurationBean;
 import com.springrest.restserver.common.Code;
-import com.springrest.restserver.domain.Role;
-import com.springrest.restserver.domain.Session;
-import com.springrest.restserver.domain.User;
-import com.springrest.restserver.domain.UserRole;
-import com.springrest.restserver.repository.RoleRepository;
-import com.springrest.restserver.repository.SessionRepository;
-import com.springrest.restserver.repository.UserRepository;
-import com.springrest.restserver.repository.UserRoleRepository;
+import com.springrest.restserver.domain.user.Role;
+import com.springrest.restserver.domain.user.Session;
+import com.springrest.restserver.domain.user.User;
+import com.springrest.restserver.domain.user.UserRole;
+import com.springrest.restserver.repository.user.RoleRepository;
+import com.springrest.restserver.repository.user.SessionRepository;
+import com.springrest.restserver.repository.user.UserRepository;
+import com.springrest.restserver.repository.user.UserRoleRepository;
 import com.springrest.restserver.service.Authenticatior;
 import com.springrest.restserver.service.Authorization;
 import com.springrest.restserver.service.RoleService;
@@ -39,7 +39,7 @@ public class AuthenticationServiceImpl implements Authenticatior,Authorization{
 	private static Log log = LogFactory.getLog(AuthenticationServiceImpl.class);
 
 	@Autowired
-	private ConfigurationBean configurationBean;
+	Environment env;
 
 	@Autowired
 	private UserRepository userRepository;
@@ -78,7 +78,7 @@ public class AuthenticationServiceImpl implements Authenticatior,Authorization{
 		try {
 			session.setSessionSign(AESUtil.encrypt(
 					String.valueOf(session.getId()),
-					configurationBean.getSessionKey()));
+					env.getProperty("session.key")));
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}

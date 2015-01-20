@@ -1,19 +1,18 @@
-package com.springrest.restserver.domain;
+package com.springrest.restserver.domain.order;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Index;
-import javax.persistence.Table;
+
+import com.datastax.driver.core.utils.UUIDs;
 
 
 @Entity
-@Table(indexes={@Index(columnList="userId"),@Index(columnList="userName")})
+@Cacheable
 public class DepositOrder implements Serializable{
 
 	/**
@@ -22,8 +21,7 @@ public class DepositOrder implements Serializable{
 	private static final long serialVersionUID = 1985797646890820686L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;
+	private String id = UUIDs.timeBased().toString();
 	
 	private Long userId;
 	
@@ -31,15 +29,16 @@ public class DepositOrder implements Serializable{
 	
 	private BigDecimal amount;
 	
-	private Integer status;
+	private Integer status=0;
 	
 	private Date createTime;
+	
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -82,5 +81,5 @@ public class DepositOrder implements Serializable{
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-	
+
 }

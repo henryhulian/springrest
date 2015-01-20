@@ -2,7 +2,7 @@ package com.springrest.restserver.service;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.springrest.restserver.domain.User;
+import com.springrest.restserver.domain.user.User;
 
 public interface UserService {
 

@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.springrest.restserver.domain.Role;
-import com.springrest.restserver.repository.RoleRepository;
-import com.springrest.restserver.repository.UserRepository;
+import com.springrest.restserver.domain.user.Role;
+import com.springrest.restserver.repository.user.RoleRepository;
+import com.springrest.restserver.repository.user.UserRepository;
 import com.springrest.restserver.service.RoleService;
 
 @Service
