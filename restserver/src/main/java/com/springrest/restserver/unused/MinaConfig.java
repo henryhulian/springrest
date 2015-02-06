@@ -1,4 +1,5 @@
-package com.springrest.restserver.config;
+package com.springrest.restserver.unused;
+/*package com.springrest.restserver.config;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -79,3 +80,4 @@ public class MinaConfig {
 	}
 
 }
+*/

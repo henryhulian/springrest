@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.springrest.restserver.domain.user.Session;
-import com.springrest.restserver.domain.user.User;
+import com.springrest.restserver.entity.user.Session;
+import com.springrest.restserver.entity.user.User;
 import com.springrest.restserver.repository.user.UserRepository;
 import com.springrest.restserver.service.Authorization;
 import com.springrest.restserver.service.SessionService;

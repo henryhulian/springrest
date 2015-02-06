@@ -1,6 +1,6 @@
 eclipse.preferences.version=1
 encoding//src/main/java=UTF-8
-encoding//src/main/java/com/springrest/restserver/domain/user/User.java=UTF-8
+encoding//src/main/java/com/springrest/restserver/entity/user/User.java=UTF-8
 encoding//src/main/java/com/springrest/restserver/util/RSAUtils.java=UTF-8
 encoding//src/main/resources=UTF-8
 encoding//src/test/java=UTF-8

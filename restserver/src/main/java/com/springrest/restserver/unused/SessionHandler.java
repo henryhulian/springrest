@@ -1,4 +1,5 @@
-package com.springrest.restserver.handler;
+package com.springrest.restserver.unused;
+/*package com.springrest.restserver.handler;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -56,3 +57,4 @@ public class SessionHandler extends IoHandlerAdapter {
 		session.close(false);
 	}
 }
+*/

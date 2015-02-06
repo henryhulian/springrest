@@ -7,7 +7,7 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.springrest.restserver.domain.user.Session;
+import com.springrest.restserver.entity.user.Session;
 
 @CacheConfig(cacheNames="session")
 public interface SessionRepository extends JpaRepository<Session,Long> {

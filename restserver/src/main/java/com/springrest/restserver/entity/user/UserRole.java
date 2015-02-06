@@ -1,4 +1,4 @@
-package com.springrest.restserver.domain.user;
+package com.springrest.restserver.entity.user;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

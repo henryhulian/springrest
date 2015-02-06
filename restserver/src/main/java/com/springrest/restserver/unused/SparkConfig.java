@@ -1,10 +1,10 @@
-package com.springrest.restserver.config;
+/*package com.springrest.restserver.unused;
 
 
-//@Configuration
+@Configuration
 public class SparkConfig {
 
-	/*@Bean
+	@Bean
 	public JavaSparkContext sparkContext(){
 		SparkConf sparkConf = new SparkConf();
 		sparkConf.set("spark.cassandra.connection.host", "172.28.10.65,172.28.10.66,172.28.10.175");
@@ -12,5 +12,6 @@ public class SparkConfig {
 		sparkConf.set("spark.cassandra.read.timeout_ms","300000");
 		JavaSparkContext sc = new JavaSparkContext("spark://172.28.10.66:7077", "test", sparkConf);
 		return sc;
-	}*/
+	}
 }
+*/

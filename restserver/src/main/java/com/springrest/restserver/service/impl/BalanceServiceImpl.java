@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.springrest.restserver.common.Code;
-import com.springrest.restserver.domain.user.User;
+import com.springrest.restserver.entity.user.User;
 import com.springrest.restserver.repository.user.UserRepository;
 import com.springrest.restserver.service.BalanceService;
 

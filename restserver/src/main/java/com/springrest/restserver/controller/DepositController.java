@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.springrest.restserver.domain.order.DepositOrder;
-import com.springrest.restserver.domain.user.User;
+import com.springrest.restserver.entity.order.DepositOrder;
+import com.springrest.restserver.entity.user.User;
 import com.springrest.restserver.repository.order.DepositOrderRepository;
 import com.springrest.restserver.service.BalanceService;
 import com.springrest.restserver.service.DepositOrderService;

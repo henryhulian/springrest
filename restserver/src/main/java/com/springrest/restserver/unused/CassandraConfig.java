@@ -1,4 +1,5 @@
-package com.springrest.restserver.config;
+package com.springrest.restserver.unused;
+/*package com.springrest.restserver.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -14,8 +15,8 @@ import org.springframework.data.cassandra.mapping.BasicCassandraMappingContext;
 import org.springframework.data.cassandra.mapping.CassandraMappingContext;
 import com.datastax.driver.core.SocketOptions;
 
-//@Configuration
-//@EnableCassandraRepositories(basePackages = { "com.springrest.restserver.repository.order" })
+@Configuration
+@EnableCassandraRepositories(basePackages = { "com.springrest.restserver.repository.order" })
 public class CassandraConfig {
 
 	@Autowired
@@ -59,3 +60,4 @@ public class CassandraConfig {
 		return new CassandraTemplate(session().getObject());
 	}
 }
+*/

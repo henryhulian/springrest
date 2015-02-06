@@ -1,6 +1,6 @@
 package com.springrest.restserver.service;
 
-import com.springrest.restserver.domain.user.Role;
+import com.springrest.restserver.entity.user.Role;
 
 public interface RoleService {
 

@@ -6,7 +6,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import com.springrest.restserver.domain.user.UserRole;
+import com.springrest.restserver.entity.user.UserRole;
 
 
 public interface UserRoleRepository extends JpaRepository<UserRole,Long>{

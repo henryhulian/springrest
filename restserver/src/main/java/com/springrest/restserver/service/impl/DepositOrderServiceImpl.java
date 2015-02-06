@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.springrest.restserver.domain.order.DepositOrder;
+import com.springrest.restserver.entity.order.DepositOrder;
 import com.springrest.restserver.repository.order.DepositOrderRepository;
 import com.springrest.restserver.service.BalanceService;
 import com.springrest.restserver.service.DepositOrderService;

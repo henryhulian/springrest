@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.springrest.restserver.domain.user.Session;
+import com.springrest.restserver.entity.user.Session;
 import com.springrest.restserver.service.Authorization;
 import com.springrest.restserver.service.SessionService;
 import com.springrest.restserver.util.CookieUtil;

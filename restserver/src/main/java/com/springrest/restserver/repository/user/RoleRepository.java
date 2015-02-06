@@ -2,7 +2,7 @@ package com.springrest.restserver.repository.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.springrest.restserver.domain.user.Role;
+import com.springrest.restserver.entity.user.Role;
 
 
 public interface RoleRepository extends JpaRepository<Role,Long>{

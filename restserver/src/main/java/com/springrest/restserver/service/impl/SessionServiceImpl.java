@@ -7,7 +7,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.springrest.restserver.domain.user.Session;
+import com.springrest.restserver.entity.user.Session;
 import com.springrest.restserver.repository.user.SessionRepository;
 import com.springrest.restserver.repository.user.UserRepository;
 import com.springrest.restserver.service.SessionService;

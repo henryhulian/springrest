@@ -1,14 +1,13 @@
-package com.springrest.restserver.domain.order;
+package com.springrest.restserver.entity.order;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-
+import java.util.UUID;
 import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-import com.datastax.driver.core.utils.UUIDs;
 
 
 @Entity
@@ -21,7 +20,7 @@ public class DepositOrder implements Serializable{
 	private static final long serialVersionUID = 1985797646890820686L;
 
 	@Id
-	private String id = UUIDs.timeBased().toString();
+	private String id = UUID.randomUUID().toString();
 	
 	private Long userId;
 	

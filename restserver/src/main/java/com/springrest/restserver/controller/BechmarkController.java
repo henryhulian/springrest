@@ -2,6 +2,7 @@ package com.springrest.restserver.controller;
 
 import java.math.BigDecimal;
 import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.springrest.restserver.domain.order.DepositOrder;
+import com.springrest.restserver.entity.order.DepositOrder;
 import com.springrest.restserver.repository.order.DepositOrderRepository;
 import com.springrest.restserver.service.BalanceService;
 import com.wordnik.swagger.annotations.Api;

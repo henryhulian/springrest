@@ -9,9 +9,7 @@ import org.infinispan.spring.provider.SpringEmbeddedCacheManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.ErrorMvcAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter;
 import org.springframework.boot.context.embedded.undertow.UndertowBuilderCustomizer;
@@ -30,7 +28,7 @@ import com.mangofactory.swagger.plugin.EnableSwagger;
 import com.springrest.restserver.interceptor.SecurityInterceptor;
 
 @Configuration
-@EnableAutoConfiguration(exclude = { ErrorMvcAutoConfiguration.class ,DataSourceAutoConfiguration.class, JpaRepositoriesAutoConfiguration.class , HibernateJpaAutoConfiguration.class})
+@EnableAutoConfiguration(exclude = { ErrorMvcAutoConfiguration.class ,DataSourceAutoConfiguration.class/*, JpaRepositoriesAutoConfiguration.class , HibernateJpaAutoConfiguration.class*/})
 @EnableWebMvc
 @EnableSwagger
 @EnableCaching
