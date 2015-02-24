@@ -40,4 +40,10 @@ public class BalanceServiceImpl implements BalanceService{
 		return Code.SUCCESS;
 	}
 
+	@Override
+	public BigDecimal findBalance(Long userId) {
+		User user = userRepository.findOne(userId);
+		return user.getBalance();
+	}
+
 }

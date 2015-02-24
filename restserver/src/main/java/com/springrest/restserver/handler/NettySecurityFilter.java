@@ -19,7 +19,6 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.handler.codec.MessageToMessageDecoder;
-import io.netty.util.AttributeKey;
 
 @Component
 @Sharable
@@ -39,9 +38,7 @@ public class NettySecurityFilter extends MessageToMessageDecoder<VideoGameDataPa
 	
 	private static Log log = LogFactory.getLog(NettySecurityFilter.class);
 	
-	@SuppressWarnings("deprecation")
-	private AttributeKey<String> tokenKey = new AttributeKey<String>(HandlerConstant.TOKEN);
-
+	
 	@Override
 	protected void decode(ChannelHandlerContext ctx, VideoGameDataPackage msg,
 			List<Object> out) throws Exception {
@@ -52,7 +49,7 @@ public class NettySecurityFilter extends MessageToMessageDecoder<VideoGameDataPa
 		
 		if( msg.getCommand().equals(HandlerConstant.COMMAND_LOGIN)){
 			
-			String token=msg.getParameters().get(HandlerConstant.TOKEN);
+			String token=(String)msg.getParameters().get(HandlerConstant.TOKEN);
 			
 			// if cann't find token return
 			if( StringUtils.isEmpty(token)){
@@ -70,17 +67,19 @@ public class NettySecurityFilter extends MessageToMessageDecoder<VideoGameDataPa
 				return;
 			}
 			
+			channel.attr(HandlerConstant.TOKEN_KEY).set(token);
+			
 			out.add(msg);
 			return;
 		}
 		
 		
-		String token = channel.attr(tokenKey).get();
+		String token = channel.attr(HandlerConstant.TOKEN_KEY).get();
 		
 		 //detect token
         // if cann't find token return
 		if( StringUtils.isEmpty(token)){
-			log.warn("Token key is tmpty , client:"+channel.remoteAddress());
+			log.warn("Token key is empty , client:"+channel.remoteAddress());
 			 channel.close();
 			 return;
 		}
@@ -109,8 +108,6 @@ public class NettySecurityFilter extends MessageToMessageDecoder<VideoGameDataPa
         	 channel.close();
         	 return;
         }*/
-		
-		log.info("token:"+token);
 		
 		out.add(msg);
 	}

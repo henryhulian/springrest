@@ -33,7 +33,10 @@ public class SessionServiceImpl implements SessionService{
 
 		Long sessionId = null;
 		try {
-			sessionId = Long.parseLong(AESUtil.decrypt(token,env.getProperty("session.key")));
+			
+			String sessionInfo = AESUtil.decrypt(token,env.getProperty("session.key"));
+			sessionId = Long.parseLong(sessionInfo.split(":")[0]);
+			
 		} catch (NumberFormatException e) {
 			log.warn(e);
 		} catch (Exception e) {

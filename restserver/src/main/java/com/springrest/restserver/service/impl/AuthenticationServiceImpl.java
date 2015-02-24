@@ -77,7 +77,7 @@ public class AuthenticationServiceImpl implements Authenticatior,Authorization{
 
 		try {
 			session.setSessionSign(AESUtil.encrypt(
-					String.valueOf(session.getId()),
+					String.valueOf(session.getId())+":"+System.currentTimeMillis(),
 					env.getProperty("session.key")));
 		} catch (Exception e) {
 			throw new RuntimeException(e);

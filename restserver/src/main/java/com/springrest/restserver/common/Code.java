@@ -12,6 +12,7 @@ public class Code {
 	
 	private static Map<Integer, String> messages = new HashMap<Integer, String>();
 	static{
+		messages.put(SUCCESS, "SUCCESS");
 		messages.put(ERROR_USER_NOT_EXISED, "ERROR_USER_NOT_EXISED");
 		messages.put(ERROR_PASSWORD_OR_USERNAME_NOT_MATCH, "ERROR_PASSWORD_OR_USERNAME_NOT_MATCH");
 	}

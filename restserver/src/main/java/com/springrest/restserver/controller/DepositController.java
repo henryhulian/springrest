@@ -11,6 +11,7 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +23,7 @@ import com.springrest.restserver.repository.order.DepositOrderRepository;
 import com.springrest.restserver.service.BalanceService;
 import com.springrest.restserver.service.DepositOrderService;
 import com.springrest.restserver.service.UserService;
+import com.springrest.restserver.util.TokenUtil;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
@@ -48,10 +50,10 @@ public class DepositController {
 	@RolesAllowed("user")
 	public ResponseEntity<Void> regist(
 			@ApiParam( required = true, value = "金额") @RequestParam @NotNull @Min(value = 0) BigDecimal amount,
-			HttpServletRequest request) {
+			@CookieValue(TokenUtil.TOKEN_COOKIE_NMAE) String token ) {
 		
 		
-		User user = userService.findCurrentUserByRequest(request);
+		User user = userService.findCurrentUserByToken(token);
 		
 		DepositOrder depositOrder = new DepositOrder();
 		depositOrder.setUserId(user.getId());
@@ -69,9 +71,9 @@ public class DepositController {
 	@ApiOperation(value="查询存款订单")
 	@RolesAllowed("user")
 	public List<DepositOrder> findDepositOrderByUserId(
-			HttpServletRequest request) {
+			@CookieValue(TokenUtil.TOKEN_COOKIE_NMAE) String token) {
 		
-		User user = userService.findCurrentUserByRequest(request);
+		User user = userService.findCurrentUserByToken(token);
 		List<DepositOrder> depositOrders = depositOrderRepository.findDepositOrderByUserId(user.getId());
 		
 		return  depositOrders;

@@ -33,10 +33,13 @@ public class AmfDecoder extends MessageToMessageDecoder<ByteBuf> {
 		/*decode amf3*/
 		Amf3Input amf3Input = new Amf3Input(
 				SerializationContext.getSerializationContext());
-		amf3Input.setInputStream(new ByteArrayInputStream(content));
-		out.add((VideoGameDataPackage)amf3Input.readObject());
-		log.debug(out);
-		amf3Input.close();
+		try {
+			amf3Input.setInputStream(new ByteArrayInputStream(content));
+			out.add((VideoGameDataPackage)amf3Input.readObject());
+			log.debug(out);
+		} finally{
+			amf3Input.close();
+		}
 	}
 
 }

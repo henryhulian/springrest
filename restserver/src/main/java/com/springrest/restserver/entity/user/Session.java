@@ -82,13 +82,6 @@ public class Session  implements Serializable{
 		this.userName = userName;
 	}
 
-	@Override
-	public String toString() {
-		return "Session [id=" + id + ", userName=" + userName + ", sessionIp=" + sessionIp + ", sessionSign="
-				+ sessionSign + ", createTime=" + createTime
-				+ ", lassAccessTime=" + lassAccessTime + "]";
-	}
-
 	public Long getUserId() {
 		return userId;
 	}
@@ -96,5 +89,14 @@ public class Session  implements Serializable{
 	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
+
+	@Override
+	public String toString() {
+		return "Session [id=" + id + ", userName=" + userName + ", userId="
+				+ userId + ", sessionIp=" + sessionIp + ", sessionSign="
+				+ sessionSign + ", createTime=" + createTime
+				+ ", lassAccessTime=" + lassAccessTime + "]";
+	}
+	
 
 }

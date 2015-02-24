@@ -3,22 +3,16 @@ package com.springrest.restserver.service.impl;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.HashSet;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.springrest.restserver.entity.user.Session;
 import com.springrest.restserver.entity.user.User;
 import com.springrest.restserver.repository.user.UserRepository;
 import com.springrest.restserver.service.Authorization;
 import com.springrest.restserver.service.SessionService;
 import com.springrest.restserver.service.UserService;
-import com.springrest.restserver.util.CookieUtil;
 import com.springrest.restserver.util.DigestUtil;
-import com.springrest.restserver.util.TokenUtil;
 
 @Service
 @Transactional
@@ -35,8 +29,8 @@ public class UserServiceImpl implements UserService{
 
 
 	@Override
-	public User findCurrentUserByRequest(HttpServletRequest request) {
-		return findCurrentyUser(CookieUtil.getCookie(request, TokenUtil.TOKEN_COOKIE_NMAE));
+	public User findCurrentUserByToken(String token) {
+		return findCurrentyUser(token);
 	}
 	
 	public User findCurrentyUser(String token) {

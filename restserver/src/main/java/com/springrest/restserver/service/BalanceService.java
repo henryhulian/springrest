@@ -6,5 +6,5 @@ public interface BalanceService {
 
 	int increaseBalance( Long userId , BigDecimal amount );
 	int decreaseBalance( Long userId , BigDecimal amount );
-	
+	BigDecimal findBalance( Long userId );
 }

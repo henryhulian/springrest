@@ -11,7 +11,7 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
-import io.netty.handler.codec.LengthFieldPrepender;
+import io.netty.handler.timeout.IdleStateHandler;
 
 @Component
 public class AmfChannelInitializer extends ChannelInitializer<SocketChannel> {
@@ -35,9 +35,9 @@ public class AmfChannelInitializer extends ChannelInitializer<SocketChannel> {
 	        pipeline.addLast("framerDecode",new LengthFieldBasedFrameDecoder(10240, 0, 4, 0 , 4));
 	        pipeline.addLast("decoder", amfDecoder);
 	        pipeline.addLast("filter", securityFilter);
+	        pipeline.addLast("idleStateHandler", new IdleStateHandler(3, 3, 0));
 	        pipeline.addLast("handler", serverHandler);
 	        pipeline.addLast("encoder", amfEncoder);
-	        pipeline.addLast("framerEncode",new LengthFieldPrepender(4));	       
 	    }
 
 
