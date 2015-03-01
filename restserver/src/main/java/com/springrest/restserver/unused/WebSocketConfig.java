@@ -1,4 +1,5 @@
-package com.springrest.restserver.config;
+package com.springrest.restserver.unused;
+/*package com.springrest.restserver.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,12 +15,15 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(webSocketServerHandler(), "/webSocketServerHandler");
+        registry.addHandler(webSocketServerHandler(), "/webSocketServerHandler").withSockJS();
     }
 
     @Bean
     public WebSocketServerHandler webSocketServerHandler() {
         return new WebSocketServerHandler();
     }
+    
+    
 
 }
+*/

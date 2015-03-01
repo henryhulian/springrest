@@ -2,9 +2,8 @@ package com.springrest.restserver.entity.user;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.UUID;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
@@ -17,8 +16,7 @@ public class Session  implements Serializable{
 	
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;
+	private String id = UUID.randomUUID().toString();
 	
 	private String userName;
 	
@@ -27,6 +25,8 @@ public class Session  implements Serializable{
 	private String sessionIp="";
 	
 	private String sessionSign="";
+	
+	private String checkCode;
 	
 	private Timestamp createTime=new Timestamp(System.currentTimeMillis());
 	
@@ -66,11 +66,11 @@ public class Session  implements Serializable{
 	}
 	
 	
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -96,6 +96,14 @@ public class Session  implements Serializable{
 				+ userId + ", sessionIp=" + sessionIp + ", sessionSign="
 				+ sessionSign + ", createTime=" + createTime
 				+ ", lassAccessTime=" + lassAccessTime + "]";
+	}
+
+	public String getCheckCode() {
+		return checkCode;
+	}
+
+	public void setCheckCode(String checkCode) {
+		this.checkCode = checkCode;
 	}
 	
 

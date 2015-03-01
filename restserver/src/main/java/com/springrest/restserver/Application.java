@@ -20,6 +20,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.xnio.Options;
@@ -33,6 +34,7 @@ import com.springrest.restserver.interceptor.SecurityInterceptor;
 @EnableSwagger
 @EnableCaching
 @ComponentScan
+@EnableTransactionManagement
 public class Application extends WebMvcAutoConfigurationAdapter {
 	
 	@Autowired

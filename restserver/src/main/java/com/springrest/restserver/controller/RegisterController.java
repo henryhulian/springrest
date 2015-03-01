@@ -15,11 +15,12 @@ import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
 
-@RestController("/register")
+@RestController
+@RequestMapping("/register")
 @Api(value = "/register", description = "注册模块")
 public class RegisterController {
 	
-	private static Log log = LogFactory.getLog(RegisterController.class);
+	private static final Log log = LogFactory.getLog(RegisterController.class);
 
 	@Autowired
 	private UserService userService;

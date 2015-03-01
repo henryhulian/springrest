@@ -36,7 +36,7 @@ public class NettySecurityFilter extends MessageToMessageDecoder<VideoGameDataPa
 	@Autowired
 	private Authorization authorization;
 	
-	private static Log log = LogFactory.getLog(NettySecurityFilter.class);
+	private static final Log log = LogFactory.getLog(NettySecurityFilter.class);
 	
 	
 	@Override

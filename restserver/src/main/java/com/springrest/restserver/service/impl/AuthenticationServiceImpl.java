@@ -26,7 +26,6 @@ import com.springrest.restserver.service.Authenticatior;
 import com.springrest.restserver.service.Authorization;
 import com.springrest.restserver.service.RoleService;
 import com.springrest.restserver.service.SessionService;
-import com.springrest.restserver.util.AESUtil;
 import com.springrest.restserver.util.CookieUtil;
 import com.springrest.restserver.util.DigestUtil;
 import com.springrest.restserver.util.IpUtil;
@@ -36,7 +35,7 @@ import com.springrest.restserver.util.TokenUtil;
 @Transactional
 public class AuthenticationServiceImpl implements Authenticatior,Authorization{
 	
-	private static Log log = LogFactory.getLog(AuthenticationServiceImpl.class);
+	private static final Log log = LogFactory.getLog(AuthenticationServiceImpl.class);
 
 	@Autowired
 	Environment env;
@@ -68,21 +67,8 @@ public class AuthenticationServiceImpl implements Authenticatior,Authorization{
 		if (!DigestUtil.sha256_base64(password).equals(user.getPassword())) {
 			return Code.ERROR_PASSWORD_OR_USERNAME_NOT_MATCH;
 		}
-
-		Session session = new Session();
-		session.setUserName(userName);
-		session.setUserId(user.getId());
-		session.setSessionIp(IpUtil.getIp(request));
-		session=sessionRepository.save(session);
-
-		try {
-			session.setSessionSign(AESUtil.encrypt(
-					String.valueOf(session.getId())+":"+System.currentTimeMillis(),
-					env.getProperty("session.key")));
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-		sessionRepository.save(session);
+		
+		Session session = sessionService.createUserSession(userName, user.getId(), IpUtil.getIp(request));
 
 		CookieUtil.setCookie(response, TokenUtil.TOKEN_COOKIE_NMAE,
 				session.getSessionSign(), request.getContextPath(), true, -1);

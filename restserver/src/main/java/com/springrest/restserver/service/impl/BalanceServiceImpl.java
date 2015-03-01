@@ -5,26 +5,26 @@ import java.math.BigDecimal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.springrest.restserver.common.Code;
-import com.springrest.restserver.entity.user.User;
-import com.springrest.restserver.repository.user.UserRepository;
+import com.springrest.restserver.entity.user.Wallet;
+import com.springrest.restserver.repository.user.WalletRepository;
 import com.springrest.restserver.service.BalanceService;
 
 @Service
 @Transactional
 public class BalanceServiceImpl implements BalanceService{
 	
+	
 	@Autowired
-	private UserRepository userRepository;
+	private WalletRepository walletRepository;
 
 	@Override
 	public int increaseBalance(Long userId, BigDecimal amount) {
 		
-		User user = userRepository.findOne(userId);
-		user.setBalance(user.getBalance().add(amount));
+		Wallet wallet = walletRepository.findWalletWithLockByUserId(userId);
+		wallet.setBalance(wallet.getBalance().add(amount));
 		
-		userRepository.save(user);
+		walletRepository.save(wallet);
 		
 		return Code.SUCCESS;
 	}
@@ -32,18 +32,18 @@ public class BalanceServiceImpl implements BalanceService{
 	@Override
 	public int decreaseBalance(Long userId, BigDecimal amount) {
 		
-		User user = userRepository.findOne(userId);
-		user.setBalance(user.getBalance().subtract(amount));
+		Wallet wallet = walletRepository.findWalletWithLockByUserId(userId);
+		wallet.setBalance(wallet.getBalance().subtract(amount));
 		
-		userRepository.save(user);
+		walletRepository.save(wallet);
 		
 		return Code.SUCCESS;
 	}
 
 	@Override
 	public BigDecimal findBalance(Long userId) {
-		User user = userRepository.findOne(userId);
-		return user.getBalance();
+		Wallet wallet = walletRepository.findOne(userId);
+		return wallet.getBalance();
 	}
 
 }

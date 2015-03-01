@@ -20,7 +20,7 @@ import com.springrest.restserver.service.SocketApiService;
 @Sharable
 public class NettyServerHandler extends SimpleChannelInboundHandler<VideoGameDataPackage> {
 	
-	private static Log log = LogFactory.getLog(NettyServerHandler.class);
+	private static final Log log = LogFactory.getLog(NettyServerHandler.class);
 	
 	@Autowired
 	private SocketApiService socketApiService;

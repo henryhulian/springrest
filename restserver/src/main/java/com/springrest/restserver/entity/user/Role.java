@@ -15,8 +15,6 @@ public class Role {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	private Long userId;
-	
 	private String name;
 	
 	
@@ -65,14 +63,6 @@ public class Role {
 		} else if (!name.equals(other.name))
 			return false;
 		return true;
-	}
-
-	public Long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Long userId) {
-		this.userId = userId;
 	}
 	
 }

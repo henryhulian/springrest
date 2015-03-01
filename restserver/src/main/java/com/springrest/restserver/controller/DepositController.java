@@ -29,7 +29,8 @@ import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
 
 
-@RestController("/deposit")
+@RestController
+@RequestMapping("/deposit")
 @Api(value = "/deposit", description = "存款模块")
 public class DepositController {
 	

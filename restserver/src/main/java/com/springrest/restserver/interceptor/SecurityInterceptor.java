@@ -28,7 +28,7 @@ import com.springrest.restserver.util.TokenUtil;
 @Component
 public class SecurityInterceptor extends HandlerInterceptorAdapter{
 	
-	private static Log log = LogFactory.getLog(SecurityInterceptor.class);
+	private static final Log log = LogFactory.getLog(SecurityInterceptor.class);
 	
 	@Autowired
 	private SessionService sessionService;

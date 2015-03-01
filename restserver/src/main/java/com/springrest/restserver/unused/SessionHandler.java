@@ -16,7 +16,7 @@ import com.springrest.restserver.service.BalanceService;
 
 public class SessionHandler extends IoHandlerAdapter {
 	
-	private static Log log = LogFactory.getLog(SessionHandler.class);
+	private static final Log log = LogFactory.getLog(SessionHandler.class);
 	
 	@Autowired
 	private BalanceService balanceService;

@@ -25,7 +25,7 @@ import com.wordnik.swagger.annotations.ApiOperation;
 @Api(value = "/bechmark", description = "压力测试模块")
 public class BechmarkController {
 	
-	private static Log log = LogFactory.getLog(BechmarkController.class);
+	private static final Log log = LogFactory.getLog(BechmarkController.class);
 
 
 	@Autowired

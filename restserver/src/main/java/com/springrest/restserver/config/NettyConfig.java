@@ -4,6 +4,7 @@ import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+
 import java.net.InetSocketAddress;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,19 +18,23 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
 import com.springrest.restserver.protocol.amf.AmfChannelInitializer;
+import com.springrest.restserver.protocol.websocket.WebSocketChannelInitializer;
 
 @Configuration
 public class NettyConfig {
 	
-	private static Log log = LogFactory.getLog(NettyConfig.class);
+	private static final Log log = LogFactory.getLog(NettyConfig.class);
 
 	@Autowired
 	private Environment env;
 	
 	@Autowired
 	private AmfChannelInitializer amfChannelInitializer;
+	
+	@Autowired
+	private WebSocketChannelInitializer webSocketChannelInitializer;
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Bean
 	public ServerBootstrap bootstrap() {
 
@@ -39,11 +44,29 @@ public class NettyConfig {
 				.childHandler(amfChannelInitializer);
 		Map<ChannelOption<?>, Object> tcpChannelOptions = tcpChannelOptions();
 		Set<ChannelOption<?>> keySet = tcpChannelOptions.keySet();
-		for (@SuppressWarnings("rawtypes")
-		ChannelOption option : keySet) {
+		for ( ChannelOption option : keySet) {
 			bootstrap.option(option, tcpChannelOptions.get(option));
 		}
 		InetSocketAddress address = tcpPort();
+		bootstrap.bind(address);
+		log.info("netty started at "+address.getAddress()+":"+address.getPort());
+		return bootstrap;
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Bean
+	public ServerBootstrap wsbootstrap() {
+
+		ServerBootstrap bootstrap = new ServerBootstrap();
+		bootstrap.group(bossGroup(), workerGroup())
+				.channel(NioServerSocketChannel.class)
+				.childHandler(webSocketChannelInitializer);
+		Map<ChannelOption<?>, Object> tcpChannelOptions = tcpChannelOptions();
+		Set<ChannelOption<?>> keySet = tcpChannelOptions.keySet();
+		for (ChannelOption option : keySet) {
+			bootstrap.option(option, tcpChannelOptions.get(option));
+		}
+		InetSocketAddress address = wstcpPort();
 		bootstrap.bind(address);
 		log.info("netty started at "+address.getAddress()+":"+address.getPort());
 		return bootstrap;
@@ -62,6 +85,11 @@ public class NettyConfig {
 	@Bean
 	public InetSocketAddress tcpPort() {
 		return new InetSocketAddress(env.getProperty("tcp.socket.port",Integer.class,12727));
+	}
+	
+	@Bean
+	public InetSocketAddress wstcpPort() {
+		return new InetSocketAddress(env.getProperty("ws.tcp.socket.port",Integer.class,12728));
 	}
 
 	@Bean

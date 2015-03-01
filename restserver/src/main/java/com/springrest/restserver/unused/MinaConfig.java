@@ -23,7 +23,7 @@ import com.springrest.restserver.handler.SessionHandler;
 @Configuration
 public class MinaConfig {
 
-	private static Log log = LogFactory.getLog(MinaConfig.class);
+	private static final Log log = LogFactory.getLog(MinaConfig.class);
 
 	@Autowired
 	private Environment env;

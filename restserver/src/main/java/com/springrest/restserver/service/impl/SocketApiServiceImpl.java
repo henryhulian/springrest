@@ -16,7 +16,7 @@ import com.springrest.restserver.service.SocketApiService;
 @Service
 public class SocketApiServiceImpl implements SocketApiService{
 	
-	private static Log log = LogFactory.getLog(SocketApiServiceImpl.class);
+	private static final Log log = LogFactory.getLog(SocketApiServiceImpl.class);
 	
 	@Autowired
 	private BalanceService balanceService;

@@ -1,13 +1,16 @@
-package com.springrest.restserver.protocol.amf;
+package com.springrest.restserver.protocol.websocket;
 
 import flex.messaging.io.SerializationContext;
 import flex.messaging.io.amf.Amf3Output;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.handler.codec.MessageToByteEncoder;
+import io.netty.handler.codec.MessageToMessageEncoder;
+import io.netty.handler.codec.http.websocketx.BinaryWebSocketFrame;
+import io.netty.handler.codec.http.websocketx.WebSocketFrame;
 
 import java.io.ByteArrayOutputStream;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -17,13 +20,13 @@ import com.springrest.restserver.protocol.VideoGameDataPackage;
 
 @Component
 @Sharable
-public class AmfEncoder extends MessageToByteEncoder<VideoGameDataPackage>{
+public class AmfWebSocketEncoder extends MessageToMessageEncoder<VideoGameDataPackage>{
 	
-	private static final Log log = LogFactory.getLog(AmfEncoder.class);
+	private static final Log log = LogFactory.getLog(AmfWebSocketEncoder.class);
 
 	@Override
 	protected void encode(ChannelHandlerContext ctx, VideoGameDataPackage msg,
-			ByteBuf out) throws Exception {
+			List<Object> out) throws Exception {
 		
 		ByteArrayOutputStream outStream = new ByteArrayOutputStream();  
 		Amf3Output amf3Output = new Amf3Output(SerializationContext.getSerializationContext());  
@@ -32,8 +35,10 @@ public class AmfEncoder extends MessageToByteEncoder<VideoGameDataPackage>{
 			amf3Output.writeObject(msg);  
 			
 			byte content[] = outStream.toByteArray();  
-			out.writeInt(content.length);
-			out.writeBytes(content);
+			ByteBuf byteBuf = ctx.channel().alloc().buffer();
+			byteBuf.writeBytes(content);
+			WebSocketFrame socketFrame = new BinaryWebSocketFrame(byteBuf);
+			out.add(socketFrame);
 			log.debug(msg);
 		}finally{
 			amf3Output.close();
