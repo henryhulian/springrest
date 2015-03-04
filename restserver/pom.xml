@@ -19,6 +19,8 @@
 		<version.bonecp>0.8.0.RELEASE</version.bonecp>
 		<version.commons.codec>1.10</version.commons.codec>
 		<version.blazeds>3.2.0.3978</version.blazeds>
+		<version.blazeds>3.2.0.3978</version.blazeds>
+		<version.kaptcha>2.3.2</version.kaptcha>
 	</properties>
 
 	<dependencies>
@@ -158,7 +160,7 @@
 		<dependency>
 			<groupId>com.google.code</groupId>
 			<artifactId>kaptcha</artifactId>
-			<version>2.3.2</version>
+			<version>${version.kaptcha}</version>
 		</dependency>
 
 		<dependency>
@@ -209,7 +211,7 @@
 							<goal>copy-dependencies</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>${project.build.directory}/server</outputDirectory>
+							<outputDirectory>${project.build.directory}/../package/server</outputDirectory>
 							<overWriteReleases>false</overWriteReleases>
 							<overWriteSnapshots>false</overWriteSnapshots>
 							<overWriteIfNewer>true</overWriteIfNewer>
@@ -221,6 +223,7 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
 				<configuration>
+					<outputDirectory>${project.build.directory}/../package</outputDirectory>
 					<archive>
 						<manifest>
 							<addClasspath>true</addClasspath>
